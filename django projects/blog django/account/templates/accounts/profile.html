@@ -1,0 +1,86 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Table 05</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+	<link rel="stylesheet" href="{% static 'account/css/style.css' %}">
+
+</head>
+
+<body>
+	<section class="ftco-section">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-5">
+					<h2 class="heading-section"><a class="btn btn-success" href="{% url 'blog:create_article' %}">Create Article</a>	</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="table-wrap">
+						<table class="table table-responsive-xl">
+							<thead>
+								<tr>
+									<th>Author</th>
+									<th>Title</th>
+									<th>image</th>
+									<th>Body</th>
+									<th>Status</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for article in articles %}
+								<tr class="alert" role="alert">
+									<td>{{article.author}}</td>
+									<td><a href="{% url 'blog:update_article' article.id %}">{{article.title}}</a></td>
+									<td> <img style="width: 60px;" src="{{article.image.url}}" alt=""> </td>
+									<td>{{article.body | truncatewords:5}}</td>
+									
+									
+									{% if article.status == 'publish' %}
+										<td class="status"><span class="publish">{{article.status}}</span></td>
+										<td class="status"><a href="{% url 'blog:article_detail' article.id %}">Preview</a></td>
+
+									{% elif article.status == 'draft' %}
+										<td class="status"><span class="draft" >{{article.status}}</span></td>
+										<td class="status"><a href="{% url 'blog:article_detail' article.id %}">Preview</a></td>
+
+									{% elif article.status == 'back' %}
+										<td class="status"><span class="back" >{{article.status}}</span></td>
+										<td class="status"><a href="{% url 'blog:article_detail' article.id %}">Preview</a></td>
+										
+									{% else %}
+										<td class="status"><span class="lock" >{{article.status}}</span></td>
+										<td class="status"><a href="{% url 'blog:article_detail' article.id %}">Preview</a></td>
+
+
+
+									{% endif %}
+
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script src="{% static 'account/js/jquery.min.js' %}"></script>
+	<script src="{% static 'account/js/popper.js' %}"></script>
+	<script src="{% static 'account/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'account/js/main.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block manage_product_active %} class="active" {% endblock  %}
+
+{% block content %}
+
+  {% if products.count %}
+      <br>
+      <div class="row justify-content-center">
+        <div class="col-md-6 text-center mb-5">
+        </div>
+      </div>
+      <div class="untree_co-section before-footer-section">
+          <div class="container">
+            <div class="row mb-5">
+              <form class="col-md-12" method="post">
+                <div class="site-blocks-table">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="product-thumbnail">Image</th>
+                        <th class="product-name">Product</th>
+                        <th class="product-price">Price</th>
+                        <th class="product-quantity">Available</th>
+                        <th class="product-remove">Remove</th>
+                      </tr>
+                    </thead>
+                    <tbody>      
+                        {% for product in products  %}   
+                          <tr>
+                              <td class="product-thumbnail">
+                              <img src="{{product.image.url}}" alt="Image" class="img-fluid">
+                              </td>
+                              <td class="product-name">
+                              <a href="{% url 'shop:product_update' product.id %}" style="color:rgb(3, 144, 78)"><h2 class="h5 ">{{product.name}}</h2></a>
+                              </td>
+                              <td>${{product.price}}</td>
+                              {% if product.is_available %}
+                                  <td> <i class="fa fa-check" aria-hidden="true"></i></td>
+                              {% else %}    
+                                  <td>X</td>
+                              {% endif %}
+                              <td><a href="{% url 'shop:product_delete' product.id %}" class="btn btn-black btn-sm">X</a></td>
+                          </tr>
+                    {% endfor %}          
+
+
+                    </tbody>
+                  </table>
+                </div>
+              </form>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6"></div>
+          </div>
+        </div>
+        <center><a class="btn btn-success" href="{% url 'shop:product_create' %}">Create Product</a></center>
+        
+
+        <br><br><br><br><br><br><br><br><br>
+  {% else %}
+      <br><br><br><br><br><br><br>
+      <div class="col-md-12">
+          <div class="card card-primary">
+              <div class="card-header">
+                  <h3 class="card-title " style="text-align:center ; color: #f30d0d;">There is no product</h3><br>
+                  <center>
+                          <p style="text-align:center ;">You can create a product With</p><br>
+                          <div class="row justify-content-center">
+                            <div class="col-md-6 text-center mb-5">
+                              <a class="btn btn-success" href="{% url 'shop:product_create' %}">Create Product</a>
+                            </div>
+                          </div>
+                  </center>
+              </div>
+          </div>
+      </div>
+      <br><br><br><br><br><br><br>
+  {% endif %}
+{% endblock content %}
+    

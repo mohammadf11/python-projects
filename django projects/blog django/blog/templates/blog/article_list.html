@@ -1,0 +1,83 @@
+{% extends './base.html' %}
+
+{% block content %}
+
+        <section class="blog-posts">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8">
+                <div class="all-blog-posts">
+                  <div class="row">
+                    {% for article in articles  %}
+                        <div class="col-lg-12">
+                            <div class="blog-post">
+                              <div class="blog-thumb">
+                                <img src="{{article.image.url}}" alt="">
+                              </div>
+                              <div class="down-content">
+                                <span>{{article.category}}</span>
+                                <a href="{{article.get_absolute_url}}"><h4>{{article.title}}</h4></a>
+                                <ul class="post-info">
+                                  <li><a href="#">{{article.author}}</a></li>
+                                  <li><a href="#">{{article.updated}}</a></li>
+                                </ul>
+                                <p>{{article.body | truncatewords:30}}</p>
+                                <div class="post-options">
+                                  <div class="row">
+                                    <div class="col-6">
+                                      <ul class="post-tags">
+                                        <li><i class="fa fa-tags"></i></li>            
+                                        <li><a href="{{article.category.get_absolute_url}}">{{article.category}}</a></li>
+                                      </ul>
+                                    </div>
+                                    <div class="col-6">
+                                      <ul class="post-share">
+                                        <li><i class="fa fa-share-alt"></i></li>
+                                        <li><a href="#">Facebook</a>,</li>
+                                        <li><a href="#"> Twitter</a></li>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <div class="row">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-12 text-center">
+                      <div class="pagination-wrap">
+                          <ul>
+                              {% if page_obj.has_previous %}
+                              <li><a href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                              {% endif %}
+                              
+                              {% for i in paginator.page_range %}
+                                  {% if page_obj.number == i %}
+                                          <li><a style="color:#e49536">{{i}}</a></li>
+                                  {% else %}
+                                          <li><a href="?page={{ i }}">{{i}}</a></li>
+                                  {% endif %}
+                              {% endfor %}
+                              {% if page_obj.has_next %}
+                              <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>>
+                              {% endif %}
+                          </ul>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+    {% endblock content %}
+      
+

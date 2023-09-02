@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block style %}{% endblock style %}
+    
+
+{% block script %} {% endblock script %}
+
+
+{% block shop_active %} class="active" {% endblock shop_active %}
+
+{% block search %}
+<div class="s004">
+    <form  method="GET">
+      <fieldset>
+        <div class="inner-form">
+          <div class="input-field">
+            <input class="form-control" id="choices-text-preset-values" name="search_area" type="text"  value="{{search_input}}"  placeholder="Type to search..."  />
+            <button class="btn-search" type="submit">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+{% endblock search %}
+    
+    
+{% block content %}
+<div class="untree_co-section product-section before-footer-section">
+    <div class="container">
+        <div class="row">
+        {% for product  in products %}
+            <div class="col-12 col-md-4 col-lg-3 mb-5">
+                <a class="product-item" href="{% url 'shop:product_detail' product.id %}">
+                    <img src="{{product.image.url}}" class="img-fluid product-thumbnail">
+                    <h3 class="product-title">{{product.name}}</h3>
+                    <p>{{product.description|truncatewords:10}}</p>
+                    <strong class="product-price">{{product.price}}$</strong>
+
+                    <span class="icon-cross">
+                    </span>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>  
+{% endblock content %}
+
+
+    
+
+
+
+
+{% block pagination %}
+
+        <div class="row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 text-center">
+                        <div class="pagination-wrap">
+                            <ul>
+                                {% if page_obj.has_previous %}
+                                <li><a href="?page={{ page_obj.previous_page_number }}">Prev</a></li>
+                                {% endif %}
+                                
+                                {% for i in paginator.page_range %}
+                                    {% if page_obj.number == i %}
+                                            <li><a style="color:#089259">{{i}}</a></li>
+                                    {% else %}
+                                            <li><a href="?page={{ i }}">{{i}}</a></li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                <li><a href="?page={{ page_obj.next_page_number }}">Next</a></li>>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock pagination %}
+    
+    

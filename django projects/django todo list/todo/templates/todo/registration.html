@@ -1,0 +1,30 @@
+{% extends 'todo/main.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="header-bar">
+    <h1>Register</h1>
+    {% for error in form.non_field_errors %}
+        {{error}}
+    {% endfor %}
+        
+</div>
+
+<div class="card-body">
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        {{form.username|as_crispy_field}}
+        
+        {{form.password1|as_crispy_field}}
+
+        {{form.password2|as_crispy_field}}
+        <br>
+        <input style="margin-top:10px ;" class="button" type="submit" value="Register">
+    </form>
+    <p>Already have an account? <a href="{% url 'todo:login' %}">Login</a></p>
+</div>
+
+
+
+
+{% endblock content %}

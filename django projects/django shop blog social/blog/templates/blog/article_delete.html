@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<br><br><br><br><br><br><br>
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-header">
+            <h3 class="card-title " style="text-align:center ; color: #f48840;">Delete Article</h3><br>
+            <center>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <p style="text-align:center ;">Are you sure to delete {{article.title}} article ?</p><br>
+                    <input type="submit" class = 'btn btn-danger' sty value="Delete" id="">
+                </form>
+            </center>
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br>
+{% endblock content %}
+    

@@ -1,0 +1,24 @@
+{% extends './main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="header-bar">
+    <h1>Review Form</h1>
+</div>
+
+<div class="card-body">
+    <form method="POST" novalidate>
+        {% for error in form.non_field_errors %}
+            {{error}}
+        {% endfor %}
+        {% csrf_token %}
+        {{form.path|as_crispy_field}}
+        {{form.object_name_delete|as_crispy_field}}    
+        {{form.object_name_download|as_crispy_field}}    
+        <br>
+        <input class="button" type="submit" value="Send"> 
+    </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,23 @@
+{% extends './main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="header-bar">
+    <h1>Login</h1>
+</div>
+
+<div class="card-body">
+    <form method="POST" novalidate>
+        {% csrf_token %}
+        {{form.as_p}}
+            <h1>Code  = {{verify_code.code}}</h1>
+        <br>
+        <input class="button" type="submit" value="Send"> <br><br><br>
+
+
+    </form>
+    <p><a href="{% url 'shop:product_list' %} " class="btn btn-danger">Home</a></p>
+</div>
+
+{% endblock content %}

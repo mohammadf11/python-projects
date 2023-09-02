@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+  {% if cart_count %}
+    <div class="untree_co-section before-footer-section">
+        <div class="container">
+          <div class="row mb-5">
+            <form class="col-md-12" method="post">
+              <div class="site-blocks-table">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="product-thumbnail">Image</th>
+                      <th class="product-name">Product</th>
+                      <th class="product-price">Price</th>
+                      <th class="product-quantity">Quantity</th>
+                      <th class="product-total">Total</th>
+                      <th class="product-remove">Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>      
+                      {% for item in cart  %}   
+                        <tr>
+                            <td class="product-thumbnail">
+                            <img src="{{item.product.image.url}}" alt="Image" class="img-fluid">
+                            </td>
+                            <td class="product-name">
+                            <h2 class="h5 text-black">{{item.product.name}}</h2>
+                            </td>
+                            <td>${{item.product.price}}</td>
+                            <td>
+                                {{item.quantity}}
+                            </td>
+                            <td>${{item.total_price}}</td>
+                            <td><a href="{% url 'shop:remove_product_cart' item.product.id %}" class="btn btn-black btn-sm">X</a></td>
+                        </tr>
+                  {% endfor %}          
+
+
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6"></div>
+          {% if cart.get_total_price != 0 %}
+            <div class="col-md-6 pl-5">
+              <div class="row justify-content-end">
+                <div class="col-md-7">
+                  <div class="row">
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-3">
+                      <span class="text-black">total price</span>
+                    </div>
+                    <div class="col-md-5 text-right">
+                      <strong class="text-black">${{cart.get_total_price}}</strong>
+                    </div>
+                  </div>
+
+                  
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary btn-lg py-3 btn-block" onclick="window.location='{% url 'order:order_verify' %}'">Proceed To Checkout</button>
+                        </div>
+                    </div>
+                      
+
+                </div>
+              </div>
+            </div>
+          </div>
+      {% else %}
+          <div class="col-md-6 pl-5">
+              <div class="row justify-content-end">
+              <div class="col-md-7">
+                  <div class="row">
+                  <div class="col-md-12 text-right border-bottom mb-5">
+                      <h3 class="text-black h4 text-uppercase"></h3>
+                  </div>
+                  </div>
+                  <div class="row mb-3">
+                  <div class="col-md-6">
+                      <span class="text-black"></span>
+                  </div>
+                  <div class="col-md-6 text-right">
+                      <strong class="text-black"></strong>
+                  </div>
+                  </div>
+
+                  
+                  <div class="row">
+                      <div class="col-md-12">
+                      </div>
+                  </div>
+                      
+
+              </div>
+              </div>
+          </div>
+      </div>
+      {% endif %}
+      </div>
+    </div>
+  {% else %}
+      <br><br><br><br><br><br><br>
+      <div class="col-md-12">
+          <div class="card card-primary">
+              <div class="card-header">
+                  <h3 class="card-title " style="text-align:center ; color: #f30d0d;">You have not selected any products</h3><br>
+                  <center>
+                          <p style="text-align:center ;">You can select a product With</p><br>
+                          <div class="row justify-content-center">
+                            <div class="col-md-6 text-center mb-5">
+                              <a class="btn btn-success" href="{% url 'shop:product_list' %}">Shop</a>
+                            </div>
+                          </div>
+                  </center>
+              </div>
+          </div>
+      </div>
+      <br><br><br><br><br><br><br>
+  {% endif %}
+{% endblock content %}
+    

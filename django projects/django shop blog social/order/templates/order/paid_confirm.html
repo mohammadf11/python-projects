@@ -1,0 +1,25 @@
+{% extends 'base_account.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+	<span class="login100-form-logo">
+		<img src="{% static 'images/sofa.png' %}" height="175px" alt="Image" class="img-fluid">
+	</span>
+
+	<span class="login100-form-title p-b-34 p-t-27">
+	</span>
+    {% csrf_token %}
+
+    <p  style="text-align:center ;color: khaki;">{{total_price}}  Are you sure you want to pay? </p><br>
+
+    <br><br>
+
+	<div class="container-login100-form-btn">
+		<button class="login100-form-btn">
+			Pay
+		</button>
+	</div>
+    <br><br><br>
+	
+{% endblock content %}

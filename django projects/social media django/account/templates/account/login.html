@@ -1,0 +1,28 @@
+{% extends './main.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="header-bar">
+    <h1>Login</h1>
+</div>
+
+<div class="card-body">
+    <form method="POST" novalidate>
+        {% for error in form.non_field_errors %}
+            {{error}}
+        {% endfor %}
+        {% csrf_token %}
+        {{form.username|as_crispy_field}}
+
+        {{form.password|as_crispy_field}}    
+        <br>
+        <input class="button" type="submit" value="Login"> <br><br><br>
+
+
+    </form>
+    <p>Don't have an account? <a href="{% url 'account:register' %}" class="btn btn-primary">Register</a></p>
+    <p><a href="{% url 'account:password_reset' %}" class="btn btn-danger">forget password</a></p>
+</div>
+
+{% endblock content %}

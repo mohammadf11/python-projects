@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+
+
+{% block manage_article_active %} class="active" {% endblock  %}
+
+{% block content %}
+    {% if articles.count %}
+        <br>
+        <div class="row justify-content-center">
+          <div class="col-md-6 text-center mb-5">
+          </div>
+        </div>
+        <div class="untree_co-section before-footer-section">
+            <div class="container">
+              <div class="row mb-5">
+                <form class="col-md-12" method="post">
+                  <div class="site-blocks-table">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th class="product-name">Image</th>
+                          <th class="product-thumbnail">Author</th>
+                          <th class="product-thumbnail">Title</th>
+                          <th class="product-price">Category</th>
+                          <th class="product-quantity">Publish</th>
+                          <th class="product-remove">Remove</th>
+                        </tr>
+                      </thead>
+                      <tbody>      
+                          {% for article in articles  %}   
+                            <tr>
+                                <td class="product-thumbnail">
+                                <img src="{{article.image.url}}" alt="Image" class="img-fluid">
+                                </td>
+                                <td>{{article.author.email}}</td>
+
+                                <td class="product-name">
+                                <a href="{% url 'blog:article_update' article.id %}" style="color:rgb(3, 144, 78)" ><h2 class="h5 " >{{article.title}}</h2></a>
+                                </td>
+                                <td>{{article.category}}</td>
+                                {% if article.is_publish %}
+                                    <td> <i class="fa fa-check" aria-hidden="true"></i></td>
+                                {% else %}    
+                                    <td>X</td>
+                                {% endif %}
+                                
+                                  
+
+                                <td><a href="{% url 'blog:article_delete' article.id %}" class="btn btn-black btn-sm">X</a></td>
+                            </tr>
+                      {% endfor %}          
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </form>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6"></div>
+            </div>
+          </div>
+            <center><a class="btn btn-success" href="{% url 'blog:article_create' %}">Create Article</a></center>
+          <br><br><br><br><br><br><br><br><br>
+    {% else %}
+        <br><br><br><br><br><br><br>
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title " style="text-align:center ; color: #f30d0d;">There is no article</h3><br>
+                    <center>
+                            <p style="text-align:center ;">You can write an article With</p><br>
+                            <div class="row justify-content-center">
+                              <div class="col-md-6 text-center mb-5">
+                                <a class="btn btn-success" href="{% url 'blog:article_create' %}">Create Article</a>
+                              </div>
+                            </div>
+                    </center>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br><br><br><br>
+    {% endif %}
+  {% endblock content %}
+  
+
+    

@@ -1,0 +1,15 @@
+{% extends './post_create.html' %}
+
+{% block bottom %}
+Update
+    
+{% endblock bottom %}
+
+{% block create_or_update %}
+    Update_post
+{% endblock %}
+
+{% block delelte_post %}
+    <a href="{% url 'social_media:post_delete' form.instance.id %}" class="btn btn-danger" >Delete</a>
+{% endblock delelte_post %}
+    

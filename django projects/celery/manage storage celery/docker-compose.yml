@@ -1,0 +1,83 @@
+services:
+  rabbitmq:
+    image: rabbitmq
+    container_name: 'rabbitmq'
+    networks:
+      - main
+    ports:
+      - '5672:5672'
+    restart: always
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    networks:
+      - main
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_volumes:/var/lib/postgresql/data
+    
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    restart: always
+
+  app:
+    build:  .
+    container_name: app
+    networks:
+      - main
+    ports:
+      - "8000"
+    volumes:
+      - .:/code/
+    expose:
+      - 8000
+    depends_on:
+      - postgres
+    restart: always
+
+  nginx:
+      image: nginx
+      command:  nginx -g 'daemon off;'
+      container_name: nginx
+      networks:
+          - main
+      volumes:
+          - ./nginx.conf:/etc/nginx/nginx.conf
+          - ./static:/app/static
+          - ./media:/app/media
+          - ./aws:/app/aws
+
+      restart: always
+      depends_on:
+          - app
+      ports:
+          - '80:80'
+  
+  celery:
+    build: .
+    container_name: 'celery'
+    command: 'celery -A config worker -l info'
+    networks:
+      - main
+    environment:
+      - C_FORCE_ROOT= 'true'
+    depends_on:
+      - app
+      - postgres
+      - rabbitmq
+    restart: always
+
+
+volumes:
+  postgres_volumes:
+  app_static_volume:
+  app_files_volume:
+networks:
+  main:
+
+        
+    
